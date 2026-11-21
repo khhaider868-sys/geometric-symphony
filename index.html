@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>السيمفونية الهندسية | وسيلة تعليمية سمعية بصرية</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #060b19;
+            --card-bg: #0d172e;
+            --sky-blue: #38bdf8;
+            --cyan-glow: #06b6d4;
+            --indigo-accent: #6366f1;
+            --text-white: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: rgba(56, 189, 248, 0.2);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-white);
+            line-height: 1.7;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 15% 20%, rgba(56, 189, 248, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 85% 80%, rgba(99, 102, 241, 0.08) 0%, transparent 40%);
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            padding: 3rem 1.5rem 2rem;
+            border-bottom: 1px solid var(--border-color);
+            background: linear-gradient(180deg, rgba(13, 23, 46, 0.9) 0%, rgba(6, 11, 25, 0) 100%);
+        }
+
+        .badge {
+            display: inline-block;
+            background: rgba(56, 189, 248, 0.15);
+            color: var(--sky-blue);
+            padding: 0.4rem 1.2rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            border: 1px solid var(--sky-blue);
+            margin-bottom: 1rem;
+            letter-spacing: 0.5px;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 900;
+            background: linear-gradient(90deg, #ffffff, var(--sky-blue), var(--cyan-glow));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.8rem;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            max-width: 650px;
+            margin: 0 auto 1.5rem;
+            font-size: 1.05rem;
+        }
+
+        .student-info {
+            display: flex;
+            justify-content: center;
+            gap: 1.2rem;
+            flex-wrap: wrap;
+            font-size: 0.9rem;
+            color: var(--cyan-glow);
+            background: var(--card-bg);
+            padding: 0.9rem 1.5rem;
+            border-radius: 14px;
+            max-width: 780px;
+            margin: 0 auto;
+            border: 1px solid var(--border-color);
+        }
+
+        /* Container */
+        .container {
+            max-width: 950px;
+            margin: 2rem auto;
+            padding: 0 1.2rem;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .card:hover {
+            border-color: var(--sky-blue);
+        }
+
+        .card-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--sky-blue);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .card-title span {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            background: var(--cyan-glow);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--cyan-glow);
+        }
+
+        /* Objectives Grid */
+        .objectives-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .obj-item {
+            background: rgba(6, 11, 25, 0.6);
+            padding: 1.2rem;
+            border-radius: 14px;
+            border-right: 3px solid var(--indigo-accent);
+        }
+
+        .obj-item h4 {
+            color: var(--text-white);
+            margin-bottom: 0.4rem;
+            font-size: 1.05rem;
+        }
+
+        .obj-item p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Interactive Canvas Lab */
+        .lab-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        canvas {
+            width: 100%;
+            height: 280px;
+            background: #040812;
+            border-radius: 16px;
+            border: 1px solid var(--cyan-glow);
+            box-shadow: inset 0 0 20px rgba(6, 182, 212, 0.15);
+            margin-bottom: 1.5rem;
+        }
+
+        .controls {
+            width: 100%;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+            background: rgba(6, 11, 25, 0.7);
+            padding: 1.5rem;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .control-group label {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--sky-blue);
+            display: flex;
+            justify-content: space-between;
+        }
+
+        input[type="range"] {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 6px;
+            background: #1e293b;
+            border-radius: 5px;
+            outline: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--sky-blue);
+            cursor: pointer;
+            box-shadow: 0 0 10px var(--sky-blue);
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            width: 100%;
+        }
+
+        button {
+            padding: 0.8rem 1.8rem;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--sky-blue), var(--indigo-accent));
+            color: #000;
+            box-shadow: 0 4px 15px rgba(56, 189, 248, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(56, 189, 248, 0.5);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--sky-blue);
+            border: 1px solid var(--sky-blue);
+        }
+
+        .btn-secondary:hover, .btn-secondary.active {
+            background: rgba(56, 189, 248, 0.15);
+        }
+
+        .formula-box {
+            margin-top: 1.2rem;
+            padding: 0.8rem 1.5rem;
+            background: rgba(99, 102, 241, 0.1);
+            border: 1px dashed var(--indigo-accent);
+            border-radius: 10px;
+            font-family: monospace;
+            font-size: 1.1rem;
+            color: #e0e7ff;
+            direction: ltr;
+            text-align: center;
+        }
+
+        /* Quiz Section */
+        .quiz-question {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .quiz-question:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .quiz-question p {
+            font-weight: 700;
+            margin-bottom: 0.8rem;
+            font-size: 1.05rem;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+
+        .option-btn {
+            text-align: right;
+            background: rgba(6, 11, 25, 0.8);
+            color: var(--text-white);
+            border: 1px solid var(--border-color);
+            padding: 0.8rem 1.2rem;
+            border-radius: 10px;
+            font-weight: 600;
+        }
+
+        .option-btn:hover {
+            border-color: var(--sky-blue);
+            background: rgba(56, 189, 248, 0.1);
+        }
+
+        .option-btn.correct {
+            background: rgba(6, 182, 212, 0.25);
+            border-color: var(--cyan-glow);
+            color: #fff;
+        }
+
+        .option-btn.wrong {
+            background: rgba(239, 68, 68, 0.2);
+            border-color: #ef4444;
+        }
+
+        .feedback {
+            margin-top: 0.6rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: none;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            border-top: 1px solid var(--border-color);
+            margin-top: 3rem;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="badge">وسيلة تعليمية سمعية بصرية تفاعلية</div>
+    <h1>السيمفونية الهندسية: كيف نرى الصوت؟</h1>
+    <p class="subtitle">استكشاف العلاقة الرياضية بين الترددات الصوتية والموجات الجيبية (مدخل بصري وسمعي لمتسلسلة فورييه)</p>
+    <div class="student-info">
+        <span>إعداد الطالبة: رقيه حيدر عبدالأمير</span>
+        <span>•</span>
+        <span>المرحلة الثالثة - قسم الرياضيات</span>
+        <span>•</span>
+        <span>مادة: تكنولوجيا التعليم وتطبيقاتها</span>
+        <span>•</span>
+        <span>بإشراف: د. علي المهنا</span>
+    </div>
+</header>
+
+<div class="container">
+
+    <!-- الأهداف التعليمية -->
+    <section class="card">
+        <h2 class="card-title"><span></span> الأهداف التعليمية للوسيلة</h2>
+        <p style="color: var(--text-muted); margin-bottom: 1rem;">صُممت هذه الوسيلة لدمج الإدراك البصري والسمعي، بحيث يكون المتعلم قادراً بنهاية التجربة على:</p>
+        <div class="objectives-grid">
+            <div class="obj-item">
+                <h4>1. الربط الحسي والرياضي</h4>
+                <p>إدراك أن كل صوت نسمعه هو في الحقيقة دالة رياضية موجية يمكن تمثيلها هندسياً.</p>
+            </div>
+            <div class="obj-item">
+                <h4>2. تحليل التردد والسعة</h4>
+                <p>التمييز بصرياً وسمعياً بين تأثير التردد (حدة الصوت) والسعة (شدة الصوت) على شكل الموجة.</p>
+            </div>
+            <div class="obj-item">
+                <h4>3. فهم مبدأ التراكب الموجي</h4>
+                <p>ملاحظة كيف يؤدي جمع موجات جيبية بسيطة (متسلسلة فورييه) إلى تكوين موجات معقدة ونغمات مختلفة.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- المختبر التفاعلي السمعي البصري -->
+    <section class="card">
+        <h2 class="card-title"><span></span> المختبر السمعي البصري التفاعلي</h2>
+        <p style="color: var(--text-muted); margin-bottom: 1.2rem;">اضغط على زر <strong>"تشغيل الصوت والموجة"</strong>، ثم حرك المؤشرات لتسمع التغير في التردد وترى انعكاسه الهندسي فوراً:</p>
+        
+        <div class="lab-container">
+            <canvas id="waveCanvas"></canvas>
+
+            <div class="controls">
+                <div class="control-group">
+                    <label>التردد (Frequency): <span id="freqVal">220 Hz</span></label>
+                    <input type="range" id="freqSlider" min="110" max="660" value="220">
+                    <small style="color: var(--text-muted);">يتحكم بعدد القمم في الثانية (حدة الصوت)</small>
+                </div>
+
+                <div class="control-group">
+                    <label>السعة (Amplitude): <span id="ampVal">50%</span></label>
+                    <input type="range" id="ampSlider" min="10" max="90" value="50">
+                    <small style="color: var(--text-muted);">يتحكم بارتفاع الموجة (علو الصوت)</small>
+                </div>
+
+                <div class="control-group">
+                    <label>التوافقيات (متسلسلة فورييه): <span id="harmVal">1 (موجة نقية)</span></label>
+                    <input type="range" id="harmSlider" min="1" max="7" step="2" value="1">
+                    <small style="color: var(--text-muted);">دمج موجات فردية لتشكيل موجة مربعة</small>
+                </div>
+            </div>
+
+            <div class="formula-box" id="mathFormula">
+                y(t) = 0.50 · sin(2π · 220 · t)
+            </div>
+
+            <div class="btn-group">
+                <button class="btn-primary" id="toggleAudioBtn">🔊 تشغيل الصوت والموجة</button>
+                <button class="btn-secondary active" onclick="setPreset('pure', this)">نغمة نقية (Sine)</button>
+                <button class="btn-secondary" onclick="setPreset('sharp', this)">نغمة حادة عالية</button>
+                <button class="btn-secondary" onclick="setPreset('fourier', this)">تراكب فورييه المعقد</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- التقييم التفاعلي -->
+    <section class="card">
+        <h2 class="card-title"><span></span> اختبر استيعابك (تغذية راجعة فورية)</h2>
+        
+        <div class="quiz-question">
+            <p>1. عند زيادة "التردد (Frequency)" في المختبر أعلاه، ماذا حدث للصوت والشكل الهندسي معاً؟</p>
+            <div class="options">
+                <button class="option-btn" onclick="checkAnswer(this, true, 'q1')">أصبح الصوت أكثر حدة، وتقاربت القمم الموجية من بعضها البعض.</button>
+                <button class="option-btn" onclick="checkAnswer(this, false, 'q1')">أصبح الصوت أغلظ، وزاد ارتفاع قمة الموجة للأعلى.</button>
+            </div>
+            <div class="feedback" id="q1"></div>
+        </div>
+
+        <div class="quiz-question">
+            <p>2. ما الفكرة الرياضية التي يوضحها شريط "التوافقيات" عند زيادته من 1 إلى 7؟</p>
+            <div class="options">
+                <button class="option-btn" onclick="checkAnswer(this, false, 'q2')">حساب مساحة الدائرة باستخدام التكامل الثنائي.</button>
+                <button class="option-btn" onclick="checkAnswer(this, true, 'q2')">إمكانية بناء موجات معقدة عبر جمع موجات جيبية بسيطة (متسلسلة فورييه).</button>
+            </div>
+            <div class="feedback" id="q2"></div>
+        </div>
+    </section>
+
+</div>
+
+<footer>
+    إعداد: رقيه حيدر عبدالأمير • بإشراف: د. علي المهنا • 2026
+</footer>
+
+<script>
+    const canvas = document.getElementById('waveCanvas');
+    const ctx = canvas.getContext('2d');
+    
+    function resizeCanvas() {
+        canvas.width = canvas.offsetWidth * window.devicePixelRatio;
+        canvas.height = canvas.offsetHeight * window.devicePixelRatio;
+        ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    const freqSlider = document.getElementById('freqSlider');
+    const ampSlider = document.getElementById('ampSlider');
+    const harmSlider = document.getElementById('harmSlider');
+    
+    const freqVal = document.getElementById('freqVal');
+    const ampVal = document.getElementById('ampVal');
+    const harmVal = document.getElementById('harmVal');
+    const mathFormula = document.getElementById('mathFormula');
+    const toggleAudioBtn = document.getElementById('toggleAudioBtn');
+
+    let audioCtx = null;
+    let oscillator = null;
+    let gainNode = null;
+    let isPlaying = false;
+    let phase = 0;
+
+    function updateUI() {
+        const f = freqSlider.value;
+        const a = (ampSlider.value / 100).toFixed(2);
+        const h = harmSlider.value;
+
+        freqVal.textContent = `${f} Hz`;
+        ampVal.textContent = `${ampSlider.value}%`;
+        harmVal.textContent = h == 1 ? `1 (موجة نقية)` : `${h} توافقيات مدمجة`;
+
+        if (h == 1) {
+            mathFormula.textContent = `y(t) = ${a} · sin(2π · ${f} · t)`;
+        } else {
+            mathFormula.textContent = `y(t) = ${a} · Σ [ (1/n) · sin(2π · n · ${f} · t) ]  (n = 1..${h})`;
+        }
+
+        if (isPlaying && oscillator && gainNode) {
+            oscillator.frequency.setValueAtTime(f, audioCtx.currentTime);
+            gainNode.gain.setValueAtTime((ampSlider.value / 100) * 0.25, audioCtx.currentTime);
+            updateWaveType(h);
+        }
+    }
+
+    function updateWaveType(harmonics) {
+        if (!oscillator || !audioCtx) return;
+        const n = parseInt(harmonics);
+        if (n === 1) {
+            oscillator.type = 'sine';
+        } else {
+            const real = new Float32Array(n + 1);
+            const imag = new Float32Array(n + 1);
+            for (let i = 1; i <= n; i += 2) {
+                imag[i] = 1 / i;
+            }
+            const wave = audioCtx.createPeriodicWave(real, imag);
+            oscillator.setPeriodicWave(wave);
+        }
+    }
+
+    toggleAudioBtn.addEventListener('click', () => {
+        if (!isPlaying) {
+            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            oscillator = audioCtx.createOscillator();
+            gainNode = audioCtx.createGain();
+
+            oscillator.frequency.setValueAtTime(freqSlider.value, audioCtx.currentTime);
+            gainNode.gain.setValueAtTime((ampSlider.value / 100) * 0.25, audioCtx.currentTime);
+            updateWaveType(harmSlider.value);
+
+            oscillator.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+            oscillator.start();
+
+            isPlaying = true;
+            toggleAudioBtn.textContent = '⏸ إيقاف الصوت';
+            toggleAudioBtn.style.background = 'linear-gradient(135deg, #06b6d4, #38bdf8)';
+        } else {
+            oscillator.stop();
+            audioCtx.close();
+            isPlaying = false;
+            toggleAudioBtn.textContent = '🔊 تشغيل الصوت والموجة';
+            toggleAudioBtn.style.background = '';
+        }
+    });
+
+    function setPreset(type, btn) {
+        document.querySelectorAll('.btn-secondary').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        if (type === 'pure') {
+            freqSlider.value = 220;
+            ampSlider.value = 50;
+            harmSlider.value = 1;
+        } else if (type === 'sharp') {
+            freqSlider.value = 520;
+            ampSlider.value = 70;
+            harmSlider.value = 1;
+        } else if (type === 'fourier') {
+            freqSlider.value = 180;
+            ampSlider.value = 65;
+            harmSlider.value = 7;
+        }
+        updateUI();
+    }
+
+    freqSlider.addEventListener('input', updateUI);
+    ampSlider.addEventListener('input', updateUI);
+    harmSlider.addEventListener('input', updateUI);
+
+    function drawWave() {
+        const width = canvas.offsetWidth;
+        const height = canvas.offsetHeight;
+        ctx.clearRect(0, 0, width, height);
+
+        ctx.strokeStyle = 'rgba(56, 189, 248, 0.1)';
+        ctx.lineWidth = 1;
+        for (let x = 0; x < width; x += 40) {
+            ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, height); ctx.stroke();
+        }
+        for (let y = 0; y < height; y += 40) {
+            ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(width, y); ctx.stroke();
+        }
+
+        ctx.strokeStyle = 'rgba(99, 102, 241, 0.4)';
+        ctx.beginPath();
+        ctx.moveTo(0, height / 2);
+        ctx.lineTo(width, height / 2);
+        ctx.stroke();
+
+        const freq = parseFloat(freqSlider.value) / 45;
+        const amp = (parseFloat(ampSlider.value) / 100) * (height * 0.38);
+        const harmonics = parseInt(harmSlider.value);
+
+        ctx.beginPath();
+        ctx.lineWidth = 3;
+        const gradient = ctx.createLinearGradient(0, 0, width, 0);
+        gradient.addColorStop(0, '#38bdf8');
+        gradient.addColorStop(0.5, '#06b6d4');
+        gradient.addColorStop(1, '#6366f1');
+        ctx.strokeStyle = gradient;
+        ctx.shadowBlur = 12;
+        ctx.shadowColor = '#38bdf8';
+
+        for (let x = 0; x < width; x++) {
+            let yOffset = 0;
+            for (let n = 1; n <= harmonics; n += 2) {
+                yOffset += (1 / n) * Math.sin((x * 0.02 * freq * n) + phase * n);
+            }
+            const y = (height / 2) + yOffset * amp;
+            if (x === 0) ctx.moveTo(x, y);
+            else ctx.lineTo(x, y);
+        }
+        ctx.stroke();
+        ctx.shadowBlur = 0;
+
+        phase -= (isPlaying ? 0.08 : 0.03) * (freqSlider.value / 220);
+        requestAnimationFrame(drawWave);
+    }
+
+    drawWave();
+
+    function playFeedbackSound(isCorrect) {
+        const ctxSound = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = ctxSound.createOscillator();
+        const gain = ctxSound.createGain();
+        osc.connect(gain);
+        gain.connect(ctxSound.destination);
+
+        if (isCorrect) {
+            osc.frequency.setValueAtTime(523.25, ctxSound.currentTime);
+            osc.frequency.setValueAtTime(659.25, ctxSound.currentTime + 0.1);
+            osc.frequency.setValueAtTime(783.99, ctxSound.currentTime + 0.2);
+        } else {
+            osc.type = 'sawtooth';
+            osc.frequency.setValueAtTime(180, ctxSound.currentTime);
+            osc.frequency.setValueAtTime(140, ctxSound.currentTime + 0.15);
+        }
+
+        gain.gain.setValueAtTime(0.15, ctxSound.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctxSound.currentTime + 0.4);
+        osc.start();
+        osc.stop(ctxSound.currentTime + 0.4);
+    }
+
+    function checkAnswer(btn, isCorrect, feedbackId) {
+        const parent = btn.parentElement;
+        parent.querySelectorAll('.option-btn').forEach(b => {
+            b.classList.remove('correct', 'wrong');
+        });
+
+        const feedbackEl = document.getElementById(feedbackId);
+        feedbackEl.style.display = 'block';
+
+        if (isCorrect) {
+            btn.classList.add('correct');
+            feedbackEl.style.color = '#06b6d4';
+            feedbackEl.textContent = '✓ إجابة دقيقة! التناغم بين الرؤية والسمع يوضح المفهوم الرياضي بوضوح.';
+            playFeedbackSound(true);
+        } else {
+            btn.classList.add('wrong');
+            feedbackEl.style.color = '#ef4444';
+            feedbackEl.textContent = '✕ حاول مرة أخرى: جرب تحريك المؤشر في المختبر أعلاه ولاحظ التغيير.';
+            playFeedbackSound(false);
+        }
+    }
+</script>
+
+</body>
+</html>
